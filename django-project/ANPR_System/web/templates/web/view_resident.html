@@ -1,0 +1,15 @@
+
+{% extends 'web/base.html' %}
+
+{% block content %}
+{% for resident in residents %}
+<h4>{{ resident }}</h4>
+<p>--ResidentName: {{ resident.Resident_Name }}</p>
+<p>--House_Number: {{ resident.House_Number }}</p>
+<p>--Vehicle_Number: {{ resident.Resident_Vehicle_Number }}</p>
+<p>--Vehicle_Key: {{ resident.Resident_Vehicle_Key}}</p>
+{% endfor %}
+  <div class="text-center">
+     <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+  </div>
+{% endblock %}

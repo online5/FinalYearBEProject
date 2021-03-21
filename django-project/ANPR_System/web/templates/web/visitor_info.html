@@ -1,0 +1,15 @@
+{% extends 'web/base.html' %}
+
+
+{% block content %}
+    {% for i in post %}
+    <h3>{{ i }}</h3>
+    <p>---Visitors Name: '{{ i.Visitor_Name }}'</p>
+    <p>---Visiting Resident: '{{ i.Visiting_Resident_Name }}'</p>
+    {% endfor %}
+    <body>
+      <div class="text-center">
+        <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+      </div>
+    </body>
+{% endblock %}

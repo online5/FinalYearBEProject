@@ -1,0 +1,26 @@
+
+  {% extends 'web/base.html' %}
+
+    <!--The main card-->
+    {% block content %}
+    <div class="card m-auto" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Manage Residents</h5>
+          <div class="col text-center form-group">
+            <!-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#add_resident">Add Resident</button> -->
+            <a href="{% url 'add_resident' %}" class="button btn">Add Resident</a> <br>  
+            <a href="{% url 'view_resident' %}" class="button btn">View Resident</a> <br>
+            <a href="{% url 'update_resident' %}" class="button btn btn-success">Update Data</a>
+            <a href="{% url 'remove_resident' %}" class="button btn">Remove Resident</a>
+          </div>
+          
+      </div>
+    </div>
+    
+    <div class="text-center">
+      <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+    </div>
+    {% endblock %}
+
+  
+    

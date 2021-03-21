@@ -1,0 +1,32 @@
+.navbar{
+    background-color: #004c4c !important;
+}
+.card{
+    margin-top: 100px !important;
+}
+.card .card-title{
+    text-align: center;
+    margin-bottom: 10px;
+}
+.card .btn{
+    background-color: #004c4c !important;
+    color: #FFF !important;
+    margin: 5px;
+    width: 200px;
+}
+.btn-dark{
+    text-align: center;
+    background-color: #004c4c ;
+    color: #FFF !important;
+    margin:auto;
+    margin-top: 70px !important;
+    display:block;
+    width: 150px;
+}
+
+#dash-card{
+    background-color: #004c4c !important;
+}
+#service-box .btn{
+    background-color: #004c4c !important;
+}

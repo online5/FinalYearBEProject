@@ -1,0 +1,21 @@
+{% extends 'web/base.html' %}
+
+{% block content %}
+<div>
+    {% for video in videos %}
+
+    <h4>Title: {{video.title}}</h4>
+    <div class="video">
+    <video width="500" height="500" controls >
+    <source src="{{video.video.url}}" type="video/mp4">
+    </video>
+        <div class="date">
+            Published Date: {{ video.uploaded_date }}
+        </div>
+    </div>  
+    {% endfor %}   
+</div>
+<div class="text-center">
+    <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+  </div>
+{% endblock %}

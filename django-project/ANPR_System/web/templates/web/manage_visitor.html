@@ -1,0 +1,21 @@
+
+
+    {% extends 'web/base.html' %}
+    {% block content %}    
+    <!--The main card-->
+    <div class="card m-auto" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title">Manage Visitors</h5>
+          <div class="col text-center form-group">
+            <a href="{% url 'view_visitors' %}" class="button btn">View Visitors</a> <br> 
+            <a href="{% url 'generate_log_file' %}" class="button btn">Generate Log File</a> <br>
+            <a href="{% url 'send_mail' %}" class="button btn">Email Log File</a> <br>
+          </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+    </div>
+    {% endblock %}
+ 
+

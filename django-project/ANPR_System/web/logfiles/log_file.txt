@@ -1,0 +1,20 @@
+Visitor's Logfile
+Generated at: 2020-12-16 18:36:58.544818
+--------------------------------------------------
+Visitor_Name: Deepak
+VisitingResident: Deepak
+VisitingVehicleNumber: 12431
+--------------------------------------------------
+Visitor_Name: Amit
+VisitingResident: Amit
+VisitingVehicleNumber: Amit
+--------------------------------------------------
+Visitor_Name: Atharava
+VisitingResident: Deepak
+VisitingVehicleNumber: 1232435`
+--------------------------------------------------
+Visitor_Name: Gauri
+VisitingResident: Amit
+VisitingVehicleNumber: 123456
+--------------------------------------------------
+END

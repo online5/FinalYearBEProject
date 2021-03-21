@@ -1,0 +1,41 @@
+
+{% extends 'web/base.html' %}
+{% block content %}
+<div class="container">
+    
+    <div class="text-left">
+        <button type="button" class="btn btn-primary" id="mybtn" >
+            Add Resident
+        </button>
+    </div>
+    <form method="POST" class="post-form">
+        <div class="modal fade" id="add_resident" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Enter Below Information</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        {% csrf_token %}
+                        {{form.as_p}}   
+                    </div>
+                
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" class="save btn btn-success">Save</button>
+                    </div>
+                </div> <!--End Modal Content -->
+            </div> <!--End Modal Dialog -->
+        </div>
+    </form>    
+</div>
+<div class="text-center">
+    <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+  </div>
+{% endblock %}
+
+

@@ -1,0 +1,14 @@
+
+{% extends 'web/base.html' %}
+
+{% block content %}
+<h3>Enter Vehicle Key</h3>
+    <div>
+        <form method="POST" class="post-form">{% csrf_token %}
+            <h4>{{ form.as_p }}</h4>
+            <div class ="text-left">
+            <button type="submit" class="align-self-end ml-auto btn btn-success">Enter</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

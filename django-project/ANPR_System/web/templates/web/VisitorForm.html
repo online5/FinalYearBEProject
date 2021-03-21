@@ -1,0 +1,17 @@
+{% extends 'web/base.html' %}
+
+{% block content %}
+    <h3>Welcome Visitor :) </h3>
+    <h3>{{ string }}</h3>
+    <h3>Enter the below information to proceed Futher..</h3>
+    <form method="POST" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-success">Save</button>
+    </form>
+
+    <div class="text-center">
+        <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+    </div>
+
+{% endblock %}

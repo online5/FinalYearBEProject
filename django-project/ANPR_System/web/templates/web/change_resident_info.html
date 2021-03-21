@@ -1,0 +1,11 @@
+{% extends 'web/base.html' %}
+
+{% block content %}
+<form method="POST" class="post-form" action="change_resident_info">
+    {% csrf_token %}
+    {{form.as_p}}
+    <div class="form-group">
+        <button class="btn btn-primary"> Submit</button>
+    </div>
+</form>
+{% endblock %}
