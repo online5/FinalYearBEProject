@@ -1,6 +1,6 @@
-
 #NOTES: To debug uncomment cv2.imwrite function call statements in complete_anpr function.
 #Web Module Imports
+
 from datetime import datetime
 from django.views import generic
 from django.utils import timezone
@@ -14,6 +14,7 @@ from django.core.mail import BadHeaderError, get_connection
 from .forms import ResidentForm, RemoveForm, UpdateForm, VideoForm, EmailForm, VisitorForm
 
 #Image processing module imports
+import os
 import cv2
 import base64
 import numpy as np
@@ -22,7 +23,6 @@ from keras.models import model_from_json
 from sklearn.preprocessing import LabelEncoder
 from keras.preprocessing.image import load_img, img_to_array
 from keras.applications.mobilenet_v2 import preprocess_input
-
 
 #Global Variables
 classes=[]
@@ -35,18 +35,55 @@ digit_labels=None
 model=None
 labels=None
 net=None
+video_path=''
+BASE_DIR='web/InputVideos'
 
+def handle_video_option(request):
+    global video_path
+    print("Inside handle video option")
+    if(request.method == 'POST'):
+        value=request.POST['VideoTitle']
+        if(Videos.objects.filter(title=value).exists()):
+            print("Video with entered title exists :)")
+            video=Videos.objects.get(title=value)
+            video_name_tokens=str(video.video).split('/')
+            VideoName=video_name_tokens[-1]
+            print("VideoFileName: ",VideoName)
+            video_path = BASE_DIR + '/'+VideoName
+            if(os.path.exists(video_path) == False):
+                return HttpResponse("Video Path does not exists :(")
+
+            if len(video_path) != 0:
+                msg=video.title
+                return render(request,'web/Dashboard.html',{'option_selected':msg})
+            else:
+                return HttpResponse("Video Path length is zero(Not Valid).")
+        else:
+            return HttpResponse("Video corresponding to input title does not exists :(")
+
+    return render(request,'web/play_videos.html',{})
 
 def complete_anpr(request):
     #Deepak's Module
-    image_list=MovementDetection()
+    global video_path
+
+    if((len(video_path) == 0) or (os.path.exists(video_path) == False)):
+        return HttpResponse("Error: Video path set is invalid... :(")
+
+    image_list=MovementDetection(video_path)
 
     if len(image_list) == 0:
-        return HttpResponse("Error: ImageList Empty :(")
+        return HttpResponse("Error: ImageList Empty, Check MovementDetection function :(")
 
-    img=image_list[-1]  #Sending last image from the image list
+    img=image_list[-1]  #Sending last image from the image list for quality to be max
 
     #cv2.imwrite('Deepak_img.png',img);  #Testing Deepak's module
+
+    # Work on the below error condition
+    # Update: Whenever we make changes while server is running,
+    # the server restarts itself, thus net variable and classes are not set to correct values.
+    # The existing values of these are set to default intialized values as done
+    # in the global area section.
 
     if len(classes) == 0 or net == None:
         return HttpResponse("Error: Empty Classes or net == None")
@@ -154,6 +191,8 @@ def load_once():
     labels = LabelEncoder()
     labels.classes_ = np.load('web/ML_Models/license_character_classes.npy')
     print("Labels loaded successfully...")
+
+
 
 def fill_visitor_form(request):
     if(request.method == 'POST'):
@@ -273,7 +312,6 @@ def login(request):
             request.session['User_Name']=user.User_Name
             name=user.User_Name
             context={'user':user,'login_page':login_page, 'name':name}
-            #return HttpResponse('"Loading....."')
             load_once()
             return render(request,'web/Dashboard.html', context)
         else:

@@ -12,7 +12,9 @@
     <title>Dashboard</title>
   </head>
   <body>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3">
+
        {% if LoginSuccessful %}
         <a class="navbar-brand" href="">Automatic Number Plate Recognition (ANPR) system.</a>
         {% else %}
@@ -56,9 +58,9 @@
             <div class="mt-2 col-md-6 ">
               <div class="card card-hover text-center border-dark mb-resp card-len">
                 <div class="card-body">
-                  <h3>Video Uploading Module</h3>
-                  <p>Upload the video clip for further processing(number plate recognition).</p>
-                  <a href="{% url 'upload_video' %}" class="button btn">Upload</a>
+                  <h3>Play the uploaded Videos</h3>
+                  <p>Click here to play the video clips which are given as input to out ANPR system.</p>
+                  <a href="{% url 'play_video' %}" class="button btn">Play Video</a>
                 </div>
               </div>
             </div>
@@ -67,13 +69,15 @@
                 <div class="card-body">
                   <h3>Video Processing Module</h3>
                   <p>Click here to extract the number plate from the uploaded video :) </p>
-                  <a href="{% url 'complete_anpr' %}" class="button btn">Play</a>
+                  <a href="{% url 'complete_anpr' %}" class="button btn">Process</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
     </section>
-
+    {% if option_selected %}
+        <h4> Video Option Selected: {{ option_selected }}  <h4>
+    {% endif %}
   </body>
 </html>

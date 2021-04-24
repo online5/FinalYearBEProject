@@ -22,7 +22,9 @@ urlpatterns = [
     path('login/play_video',views.play_video, name='play_video'),
     path('login/complete_anpr',views.complete_anpr, name='complete_anpr'),
     path('login/send_mail', views.send_mail, name='send_mail'),
-    path('login/MailTransferSucess', views.mail_transfer_success, name='mail_transfer_success')
+    path('login/MailTransferSucess', views.mail_transfer_success, name='mail_transfer_success'),
+    path('login/HandleVideoOption', views.handle_video_option, name='handle_video_option')
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

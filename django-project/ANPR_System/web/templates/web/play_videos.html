@@ -1,20 +1,39 @@
 {% extends 'web/base.html' %}
 
 {% block content %}
-<div>
+
+<div_pad>
     {% for video in videos %}
 
-    <h4>Title: {{video.title}}</h4>
-    <div class="video">
-    <video width="500" height="500" controls >
+    <div_head>
+    <text>Title: {{video.title}}</text>
+    </div_head>
+    <div_pad class="video">
+    <video width="450" height="450" controls >
     <source src="{{video.video.url}}" type="video/mp4">
     </video>
         <div class="date">
-            Published Date: {{ video.uploaded_date }}
+          Published Date: {{ video.uploaded_date }}
         </div>
-    </div>  
-    {% endfor %}   
-</div>
+    </div_pad>
+    <h5><br><h5>
+    {% endfor %}
+    <h5><br><h5>
+</div_pad>
+<div_head>
+
+  <form method="post" action="{% url 'handle_video_option' %}">
+    <h5> Which Video You Want To Select :)</h5>
+    {% csrf_token %}
+    {% for video in videos %}
+
+      <input type="radio" id="{{ video.title }}" name="VideoTitle" value="{{ video.title }}">
+      <label for="{{ video.title }}">{{ video.title }}</label><br>
+
+    {% endfor %}
+    <input type="submit" value="Submit">
+  </form>
+</div_head>
 <div class="text-center">
     <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
   </div>

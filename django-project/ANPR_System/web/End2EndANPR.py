@@ -1,6 +1,3 @@
-
-#NOTES: To debug uncomment cv2.imwrite function call statements in complete_anpr function.
-
 import os
 import cv2
 import math
@@ -8,21 +5,24 @@ import shutil
 import pytesseract
 import numpy as np
 import scipy.stats as stats
-#import matplotlib.pyplot as plt
-#import matplotlib.gridspec as gridspec
-
-#Note: All Input Videos are stored in web/InputVideos
-def MovementDetection():
-    BASE_PATH='web/InputVideos/'
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+#/home/deepak/Desktop/django_web/mysite/media/videos/ActualVideo1.mp4
+def MovementDetection(VideoPath):
     #Video should be in the same directory as file is.
     #DeepakVideo
-    #cap =cv2.VideoCapture(BASE_PATH+'ActualVideo1.mp4')
+    # Add a condition to validate Video Path
+    if(os.path.exists(VideoPath) == False):
+        print("Error(In MovementDetection): Path does not exists")
+        return []
+
+    cap =cv2.VideoCapture(VideoPath)
     #OmkarVideo
-    #cap =cv2.VideoCapture(BASE_PATH+'Video2_5sec.mp4')
+    #cap =cv2.VideoCapture('/home/deepak/Desktop/django_web/mysite/web/Video2_5sec.mp4')
     #AtharvaVideos
-    cap = cv2.VideoCapture(BASE_PATH+'AtharvaVideo15sec.mp4')
+    #cap = cv2.VideoCapture('/home/deepak/Desktop/django_web/mysite/web/AtharvaVideo15sec.mp4')
     #TanmayVideos
-    #cap = cv2.VideoCapture(BASE_PATH+'Tanmay19sec.mp4')
+    #cap = cv2.VideoCapture('/home/deepak/Desktop/django_web/mysite/web/Tanmay19sec.mp4')
 
     ret, frame1 = cap.read()
     ret, frame2 = cap.read()
@@ -267,10 +267,10 @@ def recognize_char(input_img, first_letter_model,first_letter_labels, second_let
         avg_theta = avg_theta/line_count
         #print(avg_theta)
         img_rotated = rotate_image(input_img, avg_theta) #ndimage.rotate(input_img, angle, cval = 128)
-        #cv2.imwrite("rotated.png", img_rotated)
+        cv2.imwrite("rotated.png", img_rotated)
     else:
         img_rotated = ndimage.rotate(input_img, 0, cval = 128)
-        #cv2.imwrite("rotated.png", img_rotated)
+        cv2.imwrite("rotated.png", img_rotated)
 
     enhanced_img = cv2.detailEnhance(img_rotated, 9, 10, 0.5)
     enhanced_gray_img = cv2.cvtColor(enhanced_img, cv2.COLOR_BGR2GRAY)
@@ -312,10 +312,10 @@ def recognize_char(input_img, first_letter_model,first_letter_labels, second_let
                     _, curr_num = cv2.threshold(curr_num, 90, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
                     char_segmented.append(curr_num)
         print("Found {} letters...".format(len(char_segmented)))
-        #fig = plt.figure(figsize=(10,6))
-        #plt.axis(False)
-        #plt.imshow(img_copy)
-        #plt.savefig('grab_digit_contour.png',dpi=300)
+        fig = plt.figure(figsize=(10,6))
+        plt.axis(False)
+        plt.imshow(img_copy)
+        plt.savefig('grab_digit_contour.png',dpi=300)
 
         final_string = ''
         title = np.array2string(predict_from_model_128(char_segmented[0],first_letter_model,first_letter_labels))
@@ -336,14 +336,13 @@ def recognize_char(input_img, first_letter_model,first_letter_labels, second_let
             title = np.array2string(predict_from_model_128(char_segmented[i],digit_model,digit_labels))
             final_string+=title.strip("'[]")
 
-        #fig = plt.figure(figsize=(5,4))
-        #grid = gridspec.GridSpec(ncols=len(char_segmented),nrows=1,figure=fig)
-        '''
+        fig = plt.figure(figsize=(5,4))
+        grid = gridspec.GridSpec(ncols=len(char_segmented),nrows=1,figure=fig)
+
         for i in range(len(char_segmented)):
             fig.add_subplot(grid[i])
-            #plt.axis(False)
-            #plt.imshow(char_segmented[i],cmap="gray")
-        '''
+            plt.axis(False)
+            plt.imshow(char_segmented[i],cmap="gray")
         return final_string
     else:
         return pytesseract.image_to_string(blur_enhanced_gray_img)
