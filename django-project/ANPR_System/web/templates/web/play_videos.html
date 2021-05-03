@@ -23,7 +23,7 @@
 <div_head>
 
   <form method="post" action="{% url 'handle_video_option' %}">
-    <h5> Which Video You Want To Select :)</h5>
+    <h4>Which Video You Want To Select :)</h4>
     {% csrf_token %}
     {% for video in videos %}
 
@@ -31,9 +31,10 @@
       <label for="{{ video.title }}">{{ video.title }}</label><br>
 
     {% endfor %}
-    <input type="submit" value="Submit">
+    <input type="submit" value="Select">
   </form>
 </div_head>
+<br>
 <div class="text-center">
     <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
   </div>

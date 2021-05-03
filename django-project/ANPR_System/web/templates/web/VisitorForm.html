@@ -1,15 +1,17 @@
-{% extends 'web/base.html' %}
+{% extends 'web/BaseForResidentAndVisitors.html' %}
 
 {% block content %}
-    <h3>Welcome Visitor :) </h3>
-    <h3>{{ string }}</h3>
-    <h3>Enter the below information to proceed Futher..</h3>
+<h2>Welcome Visitor :) </h2>
+<h2>Vehicle Number: {{ string }}</h2>
+  <div1>
+
+    <h3>Enter the below information to proceed further..</h3>
     <form method="POST" action="">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-success">Save</button>
     </form>
-
+  </div1>
     <div class="text-center">
         <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
     </div>

@@ -4,7 +4,6 @@ from .models import Resident, Videos, Visitor
 class EmailForm(forms.Form):
 
     subject=forms.CharField(max_length=50)
-    from_email=forms.EmailField()
     to_mail=forms.EmailField()
     message_body=forms.CharField(widget=forms.Textarea)
 

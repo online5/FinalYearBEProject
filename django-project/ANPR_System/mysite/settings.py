@@ -103,8 +103,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 EMAIL_HOST          = 'smtp.gmail.com'
 EMAIL_PORT          = 587
-EMAIL_HOST_USER     = 'insert-ur-email-boy'
-EMAIL_HOST_PASSWORD = 'insert-ur-email-boy'
+EMAIL_HOST_USER     = 'insert_your_email'
+EMAIL_HOST_PASSWORD = 'insert_your_password'
 EMAIL_USE_TLS       = True
 EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
 

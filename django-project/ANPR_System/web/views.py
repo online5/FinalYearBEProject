@@ -1,6 +1,6 @@
 #NOTES: To debug uncomment cv2.imwrite function call statements in complete_anpr function.
 #Web Module Imports
-
+from mysite.settings import EMAIL_HOST_USER
 from datetime import datetime
 from django.views import generic
 from django.utils import timezone
@@ -67,8 +67,11 @@ def complete_anpr(request):
     #Deepak's Module
     global video_path
 
-    if((len(video_path) == 0) or (os.path.exists(video_path) == False)):
-        return HttpResponse("Error: Video path set is invalid... :(")
+    if((len(video_path) == 0)):
+        return HttpResponse("<h2>Error: Please select input video from \"Access Input videos\" section from dashboard :)</h2>")
+
+    if((os.path.exists(video_path) == False)):
+        return HttpResponse("Error: Video path set does not exists... :(")
 
     image_list=MovementDetection(video_path)
 
@@ -82,7 +85,7 @@ def complete_anpr(request):
     # Work on the below error condition
     # Update: Whenever we make changes while server is running,
     # the server restarts itself, thus net variable and classes are not set to correct values.
-    # The existing values of these are set to default intialized values as done
+    # The existing values of these variables are set to default intialized values as done
     # in the global area section.
 
     if len(classes) == 0 or net == None:
@@ -115,7 +118,11 @@ def complete_anpr(request):
         resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
         #cv2.imwrite("Atharva_img_resized.png",resized);
         #Atharva Module
-        output_string = recognize_char(resized, first_letter_model, first_letter_labels, second_letter_model, second_letter_labels, digit_model, digit_labels, model, labels)
+        output_string = recognize_char(resized, first_letter_model, first_letter_labels, second_letter_model,
+         second_letter_labels, digit_model, digit_labels, model, labels)
+        #Now As String is found out, we can set the
+        #video path back to its default value for further processing.
+        video_path=''
         #User.objects.filter(User_Name=request.POST['username'], User_Pass=request.POST['password']).exists():
         if(Resident.objects.filter(Resident_Vehicle_Number=output_string).exists()):
             return HttpResponse("Welcome resident :)")
@@ -261,7 +268,10 @@ def send_mail(request):
         if(form.is_valid()):
             subject=request.POST['subject']
             message_body=request.POST['message_body']
-            from_email=request.POST['from_email']
+            if(len(EMAIL_HOST_USER) == 0):
+                return HttpResponse("EMAIL_HOST_USER not set :/")
+
+            from_email=EMAIL_HOST_USER
             to_mail=[]
             to_mail.append(request.POST['to_mail'])
             email=EmailMessage(subject, message_body, from_email, to_mail)
@@ -437,7 +447,7 @@ def generate_log_file(request):
         return redirect('login')
     visitor_post=Visitor.objects.all()
     now=datetime.now()
-    file_object=open('web/logfiles/log_file','w')
+    file_object=open('web/logfiles/log_file.txt','w')
     file_object.write("Visitor's Logfile\n")
     file_object.write("Generated at: "+str(now)+'\n')
     for post in visitor_post:

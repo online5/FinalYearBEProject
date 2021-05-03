@@ -1,12 +1,15 @@
-{% extends 'web/base.html' %}
+{% extends 'web/BaseForResidentAndVisitors.html' %}
 
 {% block content %}
-    <h3>Enter the below information to add Resident..</h3>
-    <form method="POST" action="">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-success">Save</button>
-    </form>
+
+    <div1>
+      <h1>Enter the below information to add Resident..</h1>
+      <form method="POST" action="">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="save btn btn-success">Save</button>
+      </form>
+    </div1>
 
     <div class="text-center">
         <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
