@@ -71,7 +71,7 @@ def complete_anpr(request):
         return HttpResponse("<h2>Error: Please select input video from \"Access Input videos\" section from dashboard :)</h2>")
 
     if((os.path.exists(video_path) == False)):
-        return HttpResponse("Error: Video path set does not exists... :(")
+        return HttpResponse("<h2>Error: Video path set does not exists... :(</h2>")
 
     image_list=MovementDetection(video_path)
 
@@ -89,7 +89,7 @@ def complete_anpr(request):
     # in the global area section.
 
     if len(classes) == 0 or net == None:
-        return HttpResponse("Error: Empty Classes or net == None")
+        return HttpResponse("<h2>Error: Empty Classes or net == None</h2>")
 
     flag,coordinates = DetectVehicle(img, net, classes)# Tanmay Module
 
@@ -120,8 +120,8 @@ def complete_anpr(request):
         #Atharva Module
         output_string = recognize_char(resized, first_letter_model, first_letter_labels, second_letter_model,
          second_letter_labels, digit_model, digit_labels, model, labels)
-        #Now As String is found out, we can set the
-        #video path back to its default value for further processing.
+        #Now as the Vehicle Number String is recognised out, we can set the
+        #video path back to its default value(Empty String)for further processing.
         video_path=''
         #User.objects.filter(User_Name=request.POST['username'], User_Pass=request.POST['password']).exists():
         if(Resident.objects.filter(Resident_Vehicle_Number=output_string).exists()):
