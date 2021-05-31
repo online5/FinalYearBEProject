@@ -78,7 +78,7 @@ def complete_anpr(request):
     if len(image_list) == 0:
         return HttpResponse("Error: ImageList Empty, Check MovementDetection function :(")
 
-    img=image_list[-1]  #Sending last image from the image list for quality to be max
+    img=image_list[-1]#Sending last image from the image list for quality to be max
 
     #cv2.imwrite('Deepak_img.png',img);  #Testing Deepak's module
 
