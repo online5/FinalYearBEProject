@@ -122,10 +122,10 @@ def complete_anpr(request):
          second_letter_labels, digit_model, digit_labels, model, labels)
         #Now as the Vehicle Number String is recognised out, we can set the
         #video path back to its default value(Empty String)for further processing.
-        video_path=''
+
         #User.objects.filter(User_Name=request.POST['username'], User_Pass=request.POST['password']).exists():
         if(Resident.objects.filter(Resident_Vehicle_Number=output_string).exists()):
-            return HttpResponse("Welcome resident :)")
+            return HttpResponse("<h2>Welcome resident :)</h2>")
         else:
             if(request.method == 'POST'):
                 form=VisitorForm(request.POST)
