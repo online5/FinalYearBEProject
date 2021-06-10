@@ -2,7 +2,7 @@
 
 Implemented an Automatic number plate recognition system to authorize vehicles in a residential society.
 
-For description and working demo of the project, refer the below link
+For description and working demo of the project, refer this link
 https://drive.google.com/file/d/1QxaeCh9ShxnVnVMUmI1JL9qZHRZSW-hh/view?usp=sharing
 (The above video is divided into two part 1: Description 2: Working demo, please wait while the video is loading also note the demo starts at 17.0 min).
 
