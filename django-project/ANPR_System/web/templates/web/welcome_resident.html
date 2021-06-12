@@ -1,0 +1,15 @@
+
+{% extends 'web/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="text-center">
+  <h3>Welcome {{ resident_name }} ! </h3>
+  <br>
+  <img align=center width=500px height=500px src="{% static 'web/WelcomeHome.jpg' %}"></img>
+</div>
+
+<div class="text-center">
+  <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+</div>
+{% endblock %}
