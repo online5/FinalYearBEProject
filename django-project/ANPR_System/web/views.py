@@ -125,7 +125,10 @@ def complete_anpr(request):
 
         #User.objects.filter(User_Name=request.POST['username'], User_Pass=request.POST['password']).exists():
         if(Resident.objects.filter(Resident_Vehicle_Number=output_string).exists()):
-            return HttpResponse("<h2>Welcome resident :)</h2>")
+            resident=Resident.objects.get(Resident_Vehicle_Number=output_string)
+            resident_name=resident.Resident_Name
+            #return HttpResponse("<h2>Welcome resident :)</h2>")
+            return render(request, 'web/welcome_resident.html', {'resident_name':resident_name})
         else:
             if(request.method == 'POST'):
                 form=VisitorForm(request.POST)
