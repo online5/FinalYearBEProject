@@ -1,0 +1,15 @@
+
+
+    {% extends 'web/base.html' %}
+    {% block content %}
+    {% load static %}
+
+    <!--The main card-->
+    <div class="center">
+      <h2>No Movement Detected.</h2>
+    </div>
+    <br>
+    <div class="text-center">
+      <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+    </div>
+    {% endblock %}

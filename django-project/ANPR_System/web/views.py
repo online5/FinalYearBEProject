@@ -1,4 +1,3 @@
-#NOTES: To debug uncomment cv2.imwrite function call statements in complete_anpr function.
 #Web Module Imports
 from mysite.settings import EMAIL_HOST_USER
 from datetime import datetime
@@ -76,17 +75,10 @@ def complete_anpr(request):
     image_list=MovementDetection(video_path)
 
     if len(image_list) == 0:
-        return HttpResponse("Error: ImageList Empty, Check MovementDetection function :(")
+        return render(request, 'web/no_movement.html',{})
 
     img=image_list[-1]#Sending last image from the image list for quality to be max
 
-    #cv2.imwrite('Deepak_img.png',img);  #Testing Deepak's module
-
-    # Work on the below error condition
-    # Update: Whenever we make changes while server is running,
-    # the server restarts itself, thus net variable and classes are not set to correct values.
-    # The existing values of these variables are set to default intialized values as done
-    # in the global area section.
 
     if len(classes) == 0 or net == None:
         return HttpResponse("<h2>Error: Empty Classes or net == None</h2>")
@@ -101,39 +93,34 @@ def complete_anpr(request):
 
         print(x, y, w, h)
         new_image=img.copy()
-        img=plate_detection(img)#Omkar Module
-        #cv2.imwrite("Omkar_img.png",img);
-        #img=None #Testing
-        if(img.all()== None):
-            context={'image':new_image}
+        img=plate_detection(img)
 
-            #cv2.imwrite("VehicleImg.jpg",new_image)
+        if(img.all() == None ):
             return render(request,"web/ShowVehicleImg.html",{})
-            #Do Something
+
 
         width = int(img.shape[1] * 3)
         height = int(img.shape[0] * 3)
         dim = (width, height)
 
         resized = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
-        #cv2.imwrite("Atharva_img_resized.png",resized);
-        #Atharva Module
+
         output_string = recognize_char(resized, first_letter_model, first_letter_labels, second_letter_model,
          second_letter_labels, digit_model, digit_labels, model, labels)
-        #Now as the Vehicle Number String is recognised out, we can set the
-        #video path back to its default value(Empty String)for further processing.
 
-        #User.objects.filter(User_Name=request.POST['username'], User_Pass=request.POST['password']).exists():
+        if(output_string == "ERROR_CHAR_LEN"):
+            print("Inside Error Char Len")
+            cv2.imwrite("/home/deepak/Desktop/git-demo/git-project/FinalYearBEProject/django-project/ANPR_System/web/static/web/VehicleImg.jpg", new_image)
+            return render(request,"web/ShowVehicleImg.html",{})
+
         if(Resident.objects.filter(Resident_Vehicle_Number=output_string).exists()):
             resident=Resident.objects.get(Resident_Vehicle_Number=output_string)
             resident_name=resident.Resident_Name
-            #return HttpResponse("<h2>Welcome resident :)</h2>")
             return render(request, 'web/welcome_resident.html', {'resident_name':resident_name})
         else:
             if(request.method == 'POST'):
                 form=VisitorForm(request.POST)
                 if(form.is_valid()):
-                    #video=Videos(title=request.POST['title'],video=request.FILES['video'], uploaded_date=timezone.now())
                     visitor=Visitor(Visitor_Name=request.POST['Visitor_Name'],Visiting_Resident_Name=request.POST['Visiting_Resident_Name'],
                     Visitor_Contact_Number=request.POST['Visitor_Contact_Number'], Vehicle_Owner_Name=request.POST['Vehicle_Owner_Name'], Vehicle_Type=request.POST['Vehicle_Type'],
                     Visitor_Vehicle_Number=output_string)
@@ -142,10 +129,10 @@ def complete_anpr(request):
             else:
                 form=VisitorForm()
                 string=output_string
-
                 return render(request, 'web/VisitorForm.html', {'form':form, 'string':string})
     else:
-        return HttpResponse("Error: Vehicle Not Detected(Tanmay Module)")
+        cv2.imwrite("/home/deepak/Desktop/git-demo/git-project/FinalYearBEProject/django-project/ANPR_System/web/static/web/NonVehicle.jpg", img)
+        return render(request, 'web/non_vehicle.html',{})
 
 def load_once():
     global classes
@@ -208,7 +195,6 @@ def fill_visitor_form(request):
     if(request.method == 'POST'):
         form=VisitorForm(request.POST)
         if(form.is_valid()):
-            #video=Videos(title=request.POST['title'],video=request.FILES['video'], uploaded_date=timezone.now())
             visitor=Visitor(Visitor_Name=request.POST['Visitor_Name'],Visiting_Resident_Name=request.POST['Visiting_Resident_Name'],
             Visitor_Contact_Number=request.POST['Visitor_Contact_Number'], Vehicle_Owner_Name=request.POST['Vehicle_Owner_Name'], Vehicle_Type=request.POST['Vehicle_Type'],
             Visitor_Vehicle_Number=output_string)
@@ -217,7 +203,6 @@ def fill_visitor_form(request):
     else:
         form=VisitorForm()
         string=output_string
-
         return render(request, 'web/VisitorForm.html', {'form':form, 'string':string})
 
 #View to be executed when number plate is manually entered
@@ -225,12 +210,13 @@ def check_vehicle_number(request):
     output_string=request.GET['username']
     print(output_string)
     if(Resident.objects.filter(Resident_Vehicle_Number=output_string).exists()):
-        return HttpResponse("Welcome resident :)")
+        resident=Resident.objects.get(Resident_Vehicle_Number=output_string)
+        resident_name=resident.Resident_Name
+        return render(request, 'web/welcome_resident.html', {'resident_name':resident_name})
     else:
         if(request.method == 'POST'):
             form=VisitorForm(request.POST)
             if(form.is_valid()):
-                #video=Videos(title=request.POST['title'],video=request.FILES['video'], uploaded_date=timezone.now())
                 visitor=Visitor(Visitor_Name=request.POST['Visitor_Name'],Visiting_Resident_Name=request.POST['Visiting_Resident_Name'],
                 Visitor_Contact_Number=request.POST['Visitor_Contact_Number'], Vehicle_Owner_Name=request.POST['Vehicle_Owner_Name'], Vehicle_Type=request.POST['Vehicle_Type'],
                 Visitor_Vehicle_Number=output_string)
@@ -239,7 +225,6 @@ def check_vehicle_number(request):
         else:
             form=VisitorForm()
             string=output_string
-
             return render(request, 'web/VisitorForm.html', {'form':form, 'string':string})
 
 # Route to dashboard page post-login if credentials are valid
@@ -315,7 +300,7 @@ def play_video(request):
 
 def loading(request):
     return render(request, 'web/loading.html',{})
-#Create your views here.
+
 def login(request):
     login_page=True
     if request.method == 'POST':
@@ -448,7 +433,12 @@ def view_resident(request):
 def generate_log_file(request):
     if(check_session(request) == False):
         return redirect('login')
+
     visitor_post=Visitor.objects.all()
+    print(visitor_post)
+    if(visitor_post.exists() == False):
+        return HttpResponse("<h2>No visitors</h2>")
+
     now=datetime.now()
     file_object=open('web/logfiles/log_file.txt','w')
     file_object.write("Visitor's Logfile\n")

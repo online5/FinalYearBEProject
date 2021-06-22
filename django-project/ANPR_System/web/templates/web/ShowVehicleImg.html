@@ -1,22 +1,28 @@
 {% extends 'web/base.html' %}
 {% load static %}
 {% block content %}
-<img src="{% static 'web/VehicleImg.jpg' %}"></img>
-<br>
-<h5>The above image cannot be recognized :( <br>Please enter the required plate number..</h5>
-<div class="card m-l" style="width: 18rem;">
-  <div class="card-body">
-    <form method ="GET" class="post-form" action="{% url 'check_vehicle_number' %}">
-      {% csrf_token %}
-      <div class="form-group">
-        <label for="username">Vehicle Number</label>
-        <input type="text" name="username" class="form-control" required="required"/>
-      </div>
-      <center><label class="text-danger">{{ msg }}</label></center>
-      <div class="col text-center form-group">
-        <button type="submit" class="btn form-control"><span class="glyphicon glyphicon-log-in"></span> Submit</button>
-      </div>
-    </form>
+
+<div style="text-align: center">
+  <img src="{% static 'web/VehicleImg.jpg' %}"></img>
+  <br>
+  <h5>The above image cannot be recognized :( <br>Please enter the required plate number..</h5>
+
+</div>
+<div class="text-center">
+  <div class="card m-l" style="margin-left: 400px; margin-right: 400px;">
+    <div class="card-body">
+      <form method ="GET" class="post-form" action="{% url 'check_vehicle_number' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="username">Vehicle Number</label>
+          <input type="text" name="username" class="form-control" required="required"/>
+        </div>
+        <center><label class="text-danger">{{ msg }}</label></center>
+        <div class="col text-center form-group">
+          <button type="submit" class="btn form-control"><span class="glyphicon glyphicon-log-in"></span> Submit</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 

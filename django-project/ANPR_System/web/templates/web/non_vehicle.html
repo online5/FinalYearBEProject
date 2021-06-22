@@ -1,0 +1,16 @@
+
+
+    {% extends 'web/base.html' %}
+    {% block content %}
+    {% load static %}
+
+    <!--The main card-->
+    <div style="text-align: center">
+      <h2>Vehicle Not Detected :(</h2>
+      <img src="{% static 'web/NonVehicle.jpg' %}"></img>
+    </div>
+    <br>
+    <div class="text-center">
+      <a href="{% url 'dashboard' %}" type ="button" class ="btn  btn-dark" ><i class="fa fa-home" aria-hidden="true"></i>Home</a>
+    </div>
+    {% endblock %}

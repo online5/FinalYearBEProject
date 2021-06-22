@@ -1,20 +1,2 @@
 Visitor's Logfile
-Generated at: 2021-05-03 12:54:20.645424
---------------------------------------------------
-Visitor_Name: Amit
-VisitingResident: Amit
-VisitingVehicleNumber: Amit
---------------------------------------------------
-Visitor_Name: Atharava
-VisitingResident: Deepak
-VisitingVehicleNumber: 1232435`
---------------------------------------------------
-Visitor_Name: Gauri
-VisitingResident: Amit
-VisitingVehicleNumber: 123456
---------------------------------------------------
-Visitor_Name: Aman
-VisitingResident: Amna
-VisitingVehicleNumber: 1232412414
---------------------------------------------------
-END
+Generated at: 2021-06-19 09:56:57.837866
