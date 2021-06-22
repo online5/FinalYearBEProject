@@ -1,9 +1,10 @@
-# FinalYearBEProject
+# Final Year BE Project
 
-Implemented an Automatic number plate recognition system to authorize vehicles in a residential society.
+Implemented an Automatic number plate recognition system(ANPR) to authorize vehicles in a residential society.
 ![block diagram](https://user-images.githubusercontent.com/40465321/122954395-06107480-d39d-11eb-9b05-78bc4371e3ec.png)
 
-Project Breakdown
+**Project Breakdown**:
+
 Module A- Image Processing:
 
     A.1 Movement Detection-Background Substraction
@@ -16,7 +17,7 @@ Module B- WebApp Development:
     B.1 Frontend Development- HTML, CSS, Bootstrap
     B.2 Backend Developement- Python, Django, SQLite database
 
-Libaries:
+**Libaries**:
 
     Python 3.8.5
     Django==3.1.4
@@ -28,7 +29,8 @@ Libaries:
     tensorflow==2.3.1
 
 
-Installation Steps:
+**Installation Steps:**
+
 
 1: Clone the repository.
 
@@ -44,13 +46,17 @@ Installation Steps:
 6: To access and use email functionality in the application, go to the path **FinalYearBEProject/django-project/ANPR_System/mysite/settings.py**, open the settings.py file, and set **EMAIL_HOST_USER** and **EMAIL_HOST_PASSWORD** variables in compliance with your mailing account credentials. 
 (Make sure to allow third-party apps access while running this application.
 
+**Project Description**:
+
 For description and working demo of the project, refer this link
 https://drive.google.com/file/d/1QxaeCh9ShxnVnVMUmI1JL9qZHRZSW-hh/view?usp=sharing
 (The above video is divided into two part 1: Description 2: Working demo, please wait while the video is loading also note the demo starts at 17.0 min).
 
 ## Contributors: 
-   [Atharva Jadhav](https://github.com/atharva21jadhav)
-   [Omkar Dongre](https://github.com/omkardongre)
-   Tanmay Shinde
+   
+   [Tanmay Shinde](https://github.com/tanmayshinde007).
+   [Atharva Jadhav](https://github.com/atharva21jadhav). [Omkar Dongre](https://github.com/omkardongre). 
+   
+   
 
 
